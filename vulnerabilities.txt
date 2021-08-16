@@ -1,0 +1,39 @@
+
+
+Vulnerability #1
+
+Incorrect Temperature display (in SampleNetworkServer.py):
+
+Another Issue that I found was that if a user changes the temperature from kelvin to celsius or Fahrenheit, the application displays incorrect or wrong temperature. This issue arises when the  getTemperature function is called. It subtracts 273 to make the conversion from kelvin to celsius.
+The user can set the degree to celsius in order to calculate the displayed temperature, but the getTemperature method/function will subtracted 273 degrees from the displayed temperature. An incubator temperature that gets too high could be dangerous to the infant. This can be resolved by subtracting an additional 273 from the temperature returned from the network server. This can be fixed by removing the additional subtraction of 237 from the class (SimpleClient).
+
+
+Hardcoded Password and in plain text:
+Passwords can be intercepted in some cases when transmitted over unencrypted connections. To exploit this vulnerability, an attacker needs to be in a position to eavesdrop on the user's network traffic.
+Hardcoded passwords are easy identified by simply inspecting the code or even using a packet sniffer (since it is also in plain text). 
+One of the ways to fix this issue is to either to use a third party authentication systems e.g. google firebase, another option is to encrypt communications, the other option, which is cost effective is to move the static password from the code to your system's environment variable. If HTTP cookies are used for transmitting session tokens, then the secure flag should be set to prevent transmission over clear-text HTTP.
+
+Below are the vulnerability classifications for passwords in plain text;
+CWE-319: Cleartext Transmission of Sensitive Information
+CAPEC-117: Interception
+
+
+Unencrypted Communications:
+A malicious attacker may capture and monitor a user's network traffic in order to observe their interactions with the application and obtain information they supply. This application allows users to connect to it over unencrypted connections. This vulnerability can only be exploited by an attacker who is positioned to eavesdrop on the victim's network traffic. 
+To fix this issue, Strict-Transport-Security HTTP headers should ensure that clients refuse to access the server over unprotected connections. Transport-level encryption (SSL/TLS) should be used to protect all communications between the client and server. 
+
+Below are the vulnerability classifications for Unencrypted Communications;
+
+CWE-326: Inadequate Encryption Strength
+CAPEC-94: Man in the Middle Attack
+CAPEC-157: Sniffing Attacks
+
+
+
+Authentication Bypass:
+
+An authentication process is an attempt to verify the identity of a sender of a communication. An example of an authentication process is the log on process. Testing the authentication schema involves understanding how the process works.
+It is possible to exploit a vulnerability in this code that allows a user to pass commands and receive responses without being authenticated. By running AUTH ;GET_TEMP , you can bypass authentication.
+By implementing client authentication with TLS, this issue can be resolved, which means there is no need for complicated logical control flows related to authentication, authorization, and identification. TLS facilitates identification, authentication, and confidentiality for both the client and server.
+
+This can be resolved by adding  self.context.verify_mode = ssl.CERT_REQUIRED to line 28.

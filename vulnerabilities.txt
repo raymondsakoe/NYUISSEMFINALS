@@ -4,7 +4,7 @@ Vulnerability #1
 
 Incorrect Temperature display (in SampleNetworkServer.py):
 
-Another Issue that I found was that if a user changes the temperature from kelvin to celsius or Fahrenheit, the application displays incorrect or wrong temperature. This issue arises when the  getTemperature function is called. It subtracts 273 to make the conversion from kelvin to celsius.
+Another Issue that was found was that if a user changes the temperature from kelvin to celsius or Fahrenheit, the application displays incorrect or wrong temperature. This issue arises when the  getTemperature function is called. It subtracts 273 to make the conversion from kelvin to celsius.
 The user can set the degree to celsius in order to calculate the displayed temperature, but the getTemperature method/function will subtracted 273 degrees from the displayed temperature. An incubator temperature that gets too high could be dangerous to the infant. This can be resolved by subtracting an additional 273 from the temperature returned from the network server. This can be fixed by removing the additional subtraction of 237 from the class (SimpleClient).
 
 

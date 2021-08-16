@@ -19,7 +19,7 @@ def temp_test(val):
         incToken = authenticate(p, b"!Q#E%T&U8i6y4r2w")
         soc.sendto(b"%s;SET_DEGC" % incToken, ("127.0.0.1", val))
         soc.sendto(b"%s;GET_TEMP" % incToken, ("127.0.0.1", val))
-        a, b = s.recvfrom(1024)
+        a, b = soc.recvfrom(1024)
         c = float(a.decode("utf-8"))
         display_temp = c - 273
         assert(display_temp < -200)
